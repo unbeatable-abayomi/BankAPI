@@ -1,0 +1,77 @@
+{
+	"employee": [
+		{
+			"id": 1,
+			"name": "ola sliver",
+			"accountNumber": "0000000001",
+			"bankName": "UBA"
+		},
+		{
+			"id": 2,
+			"name": "mike gold",
+			"accountNumber": "0000000002",
+			"bankName": "WEMABANK"
+		},
+		{
+			"id": 3,
+			"name": "willams winpo",
+			"accountNumber": "0000000003",
+			"bankName": "GTBANK"
+		},
+		{
+			"id": 4,
+			"name": "ade tunji",
+			"accountNumber": "0000000004",
+			"bankName": "STERLINGBANK"
+		},
+		{
+			"id": 5,
+			"name": "Kole fiji",
+			"accountNumber": "0000000005",
+			"bankName": "ZENITHBANK"
+		},
+		{
+			"id": 6,
+			"name": "Femi Oba",
+			"accountNumber": "0000000006",
+			"bankName": "ZENITHBANK"
+		},
+		{
+			"id": 7,
+			"name": "Kelechi Marachi",
+			"accountNumber": "0000000007",
+			"bankName": "FIRSTBANK"
+		},
+		{
+			"id": 8,
+			"name": "Oluchi Marachi",
+			"accountNumber": "0000000008",
+			"bankName": "ACCESSBANK"
+		},
+		{
+			"id": 9,
+			"name": "Ada Marachi",
+			"accountNumber": "0000000009",
+			"bankName": "POLARISBANK"
+		},
+		{
+			"id": 10,
+			"name": "Flur Sharp",
+			"accountNumber": "0000000010",
+			"bankName": "FIDELITYBANK"
+		},
+		{
+			"id": 11,
+			"name": "Mina Lawal",
+			"accountNumber": "0000000015",
+			"bankName": "UBA"
+		},
+		{
+			"id": 12,
+			"name": "Seun Ogo",
+			"accountNumber": "0000000016",
+			"bankName": "ZENITHBANK"
+		}
+
+	]
+}
