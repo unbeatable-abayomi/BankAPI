@@ -322,5 +322,67 @@ namespace BankAPI.Controllers
 
             return CreatedAtAction("GetOneZenithBankCustomer", new { id = zenithBankCustomer.Id }, zenithBankCustomer);
         }
+
+
+        [HttpGet("UNIONBANK")]
+        public async Task<ActionResult<IEnumerable<UnionBankCustomer>>> GetUnionBankCustomers()
+        {
+
+            return await _context.unionBankCustomers.ToListAsync();
+
+        }
+
+        [HttpGet("UNIONBANK/{id}")]
+        public async Task<ActionResult<UnionBankCustomer>> GetOneUnionBankCustomer(int id)
+        {
+            var unionBankCustomer = await _context.unionBankCustomers.FindAsync(id);
+
+            if (unionBankCustomer == null)
+            {
+                return NotFound();
+            }
+
+            return unionBankCustomer;
+        }
+
+        [HttpPost("UNIONBANK")]
+        public async Task<ActionResult<UnionBankCustomer>> PostUnionBank(UnionBankCustomer unionBankCustomer)
+        {
+            _context.unionBankCustomers.Add(unionBankCustomer);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetOneUnionBankCustomer", new { id = unionBankCustomer.Id }, unionBankCustomer);
+        }
+
+
+        [HttpGet("STERLINGBANK")]
+        public async Task<ActionResult<IEnumerable<SterlingBankCustomer>>> GetSterlingBankCustomers()
+        {
+
+            return await _context.sterlingBankCustomers.ToListAsync();
+
+        }
+
+        [HttpGet("STERLINGBANK/{id}")]
+        public async Task<ActionResult<SterlingBankCustomer>> GetOneSterlingBankCustomer(int id)
+        {
+            var sterlingBankCustomer = await _context.sterlingBankCustomers.FindAsync(id);
+
+            if (sterlingBankCustomer == null)
+            {
+                return NotFound();
+            }
+
+            return sterlingBankCustomer;
+        }
+
+        [HttpPost("STERLINGBANK")]
+        public async Task<ActionResult<SterlingBankCustomer>> PostSterlingBank(SterlingBankCustomer sterlingBankCustomer)
+        {
+            _context.sterlingBankCustomers.Add(sterlingBankCustomer);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetOneSterlingBankCustomer", new { id = sterlingBankCustomer.Id }, sterlingBankCustomer);
+        }
     }
 }

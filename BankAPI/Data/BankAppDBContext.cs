@@ -25,5 +25,7 @@ namespace BankAPI
         public DbSet<WemaBankCustomer> wemaBankCustomers { get; set; }
 
         public DbSet<ZenithBankCustomer> zenithBankCustomers { get; set; }
+        public DbSet<UnionBankCustomer> unionBankCustomers { get; set; }
+        public DbSet<SterlingBankCustomer> sterlingBankCustomers { get; set; }
     }
 }

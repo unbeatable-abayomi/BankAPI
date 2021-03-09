@@ -21,7 +21,7 @@
 		{
 			"id": 4,
 			"name": "ade tunji",
-			"accountNumber": "0000000004",
+			"accountNumber": "0000001001",
 			"bankName": "STERLINGBANK"
 		},
 		{
@@ -173,7 +173,32 @@
 			"name": "Suger Gima",
 			"accountNumber": "0000000704",
 			"bankName": "WEMABANK"
+		},
+		{
+			"id": 30,
+			"name": "Joy Buni",
+			"accountNumber": "0000001506",
+			"bankName": "STERLINGBANK"
+		},
+		{
+			"id": 31,
+			"name": "Hipo Hipo Jnr",
+			"accountNumber": "0000000907",
+			"bankName": "UNIONBANK"
+		},
+		{
+			"id": 32,
+			"name": "Sane Mane",
+			"accountNumber": "0000001910",
+			"bankName": "STERLINGBANK"
+		},
+		{
+			"id": 33,
+			"name": "Chidi Dante",
+			"accountNumber": "0000000906",
+			"bankName": "UNIONBANK"
 		}
+
 
 
 	]
