@@ -51,7 +51,7 @@ namespace BankWEB.Controllers
                                     AccountNumber = x.AccountNumber,
                                     BankName = x.BankName,
                                     AccountName = x.AccountName,
-                                    IsValidAccount = true,
+                                    IsValidAccount = true
                                 };
 
 
