@@ -34,13 +34,14 @@ namespace BankWEB.Controllers
 
             foreach (var d in details.employee)
             {
-                //string bankName = d.bankName;
-                HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
+                await Task.Run(async() => {
+
+                    HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
                 if (res.IsSuccessStatusCode)
                 {
                     var results = res.Content.ReadAsStringAsync().Result;
                     bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
-                    await Task.Run(() => {
+                   // await Task.Run(() => {
                         foreach (var x in bankDetails)
                         {
                             if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
@@ -49,7 +50,8 @@ namespace BankWEB.Controllers
                                 {
                                     AccountNumber = x.AccountNumber,
                                     BankName = x.BankName,
-                                    AccountName = x.AccountName
+                                    AccountName = x.AccountName,
+                                    IsValidAccount = true,
                                 };
 
 
@@ -58,20 +60,15 @@ namespace BankWEB.Controllers
 
                             }
                         }
+                   // });
+
+                }
                     });
 
                 }
-
-
-            }
-            var allValidZenithBank = correctBankDetails.ToList();
-            // HttpResponseMessage res = await client.GetAsync("api/employee/{}");
-            //if (res.IsSuccessStatusCode)
-            //{
-            //    var results = res.Content.ReadAsStringAsync().Result;
-            //    bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
-            //}
-            return View();
+            var allValidBankDetails = correctBankDetails.ToList();
+          
+            return View(allValidBankDetails);
         }
 
         public IActionResult Privacy()
