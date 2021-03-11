@@ -2,25 +2,25 @@
 	"employee": [
 		{
 			"id": 1,
-			"name": "ola sliver",
+			"name": "Ola Sliver",
 			"accountNumber": "0000000601",
 			"bankName": "UBABANK"
 		},
 		{
 			"id": 2,
-			"name": "mike gold",
+			"name": "Mike Gold",
 			"accountNumber": "0000000707",
 			"bankName": "WEMABANK"
 		},
 		{
 			"id": 3,
-			"name": "willams winpo",
+			"name": "Willams Winpo",
 			"accountNumber": "0000000402",
 			"bankName": "GTBANK"
 		},
 		{
 			"id": 4,
-			"name": "ade tunji",
+			"name": "Ade Tunji",
 			"accountNumber": "0000001001",
 			"bankName": "STERLINGBANK"
 		},
@@ -92,7 +92,7 @@
 		},
 		{
 			"id": 16,
-			"name": "Joe goowill",
+			"name": "Joe Goowill",
 			"accountNumber": "0000000205",
 			"bankName": "FIDELITYBANK"
 		},
@@ -122,7 +122,7 @@
 		},
 		{
 			"id": 21,
-			"name": "Kinw alll",
+			"name": "Kinw Alll",
 			"accountNumber": "0000000010",
 			"bankName": "ACCESSBANK"
 		},
@@ -164,7 +164,7 @@
 		},
 		{
 			"id": 28,
-			"name": "ola browm",
+			"name": "Ola Browm",
 			"accountNumber": "0000000609",
 			"bankName": "UBABANK"
 		},
