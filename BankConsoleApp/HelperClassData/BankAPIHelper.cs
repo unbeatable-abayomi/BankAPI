@@ -22,7 +22,7 @@ namespace BankConsoleApp.HelperClassData
         {
             var webClient = new WebClient();
 
-            var json = webClient.DownloadString(@"C:\Users\Limbot Express\source\repos\BankAPI\BankWEB\wwwroot\json\employee.config.json");
+            var json = webClient.DownloadString(@"C:\Users\Limbot Express\source\repos\BankAPI\BankConsoleApp\jsonDataFile\employee.config.json");
 
 
             var allEmployeeBankDetails = JsonConvert.DeserializeObject<AllEmployeeDetails>(json);
