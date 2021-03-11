@@ -21,16 +21,20 @@ namespace BankConsoleApp
             var helperDataClass = new BankAPIHelper();
             Random random = new Random();
             var details = helperDataClass.GetAllEmployeeBankDetails();
-            sw = Stopwatch.StartNew();
+            // Create new stopwatch.
+            Stopwatch stopwatch = new Stopwatch();
+            // Begin timing.
+            stopwatch.Start();
 
 
+            await Task.Run(async () =>  {
+                //A random delay in milliseconds ranges from 2 to 10 seconds .Considering effect of network latency on the speed of processing.
+                var number = random.Next(2000, 10000);
 
-        await Task.Run(async () =>  {
-                 var number = random.Next(2000, 10000);
-            
                 foreach (var d in details.employee)
                 {
-                   var ti = Task.Delay(number);
+                    //A random delay in milliseconds ranges from 2 to 10 seconds .Considering effect of network latency on the speed of processing.
+                    var ti = Task.Delay(number);//This line of code activates the delay.
                     HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
                     if (res.IsSuccessStatusCode)
                     {
@@ -41,7 +45,7 @@ namespace BankConsoleApp
                         {
                             if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
                             {
-                                Console.WriteLine($"{ x.AccountNumber}, {x.BankName} ,{x.AccountName}");
+                                Console.WriteLine($" Bank Name: {x.BankName}  Account Number : {x.AccountNumber}, Name : {x.AccountName}");
                                 break;
                 
 
@@ -51,18 +55,22 @@ namespace BankConsoleApp
 
                     }
 
-                await ti;
-                Console.WriteLine($"{ti.IsCompleted}");
+               // await ti;
+               //Console.WriteLine($"{ti.IsCompleted}");
                 };
             
             });
-            
-            //await Task.Run(async () => {
-            //     var number = random.Next(2000, 10000);
 
-            //    foreach (var d in details.employee.Skip(20))
+            //Below we could also take the First 500 in a task/loop and the second 500 by skipping the first 500, to take the second 500 making 1000 records 
+
+
+            //await Task.Run(async () =>
+            //{
+            //    var number = random.Next(2000, 10000);
+
+            //    foreach (var d in details.employee.Take(500))
             //    {
-            //         await Task.Delay(number);
+            //        await Task.Delay(number);
             //        HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
             //        if (res.IsSuccessStatusCode)
             //        {
@@ -75,7 +83,35 @@ namespace BankConsoleApp
             //                {
             //                    Console.WriteLine($"{ x.AccountNumber}, {x.BankName} ,{x.AccountName}");
             //                    break;
-           
+
+
+            //                }
+            //            }
+
+
+            //        }
+            //    };
+            //});
+            //await Task.Run(async () =>
+            //{
+            //    var number = random.Next(2000, 10000);
+
+            //    foreach (var d in details.employee.Skip(500))
+            //    {
+            //        await Task.Delay(number);
+            //        HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
+            //        if (res.IsSuccessStatusCode)
+            //        {
+            //            var results = res.Content.ReadAsStringAsync().Result;
+            //            bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
+
+            //            foreach (var x in bankDetails)
+            //            {
+            //                if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
+            //                {
+            //                    Console.WriteLine($"{ x.AccountNumber}, {x.BankName} ,{x.AccountName}");
+            //                    break;
+
 
             //                }
             //            }
@@ -85,10 +121,15 @@ namespace BankConsoleApp
             //    };
             //});
 
+            // Stop timing.
+            stopwatch.Stop();
 
-            var time = sw.ElapsedMilliseconds;
+            // Write result.
+            Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
+            Console.WriteLine("Time elapsed in Milliseconds: {0}", stopwatch.ElapsedMilliseconds);
+            //var time = sw.ElapsedMilliseconds;
            
-            Console.WriteLine($"Time Taken in Milliseconds {time}");
+            //Console.WriteLine($"Time Taken To Process In Milliseconds => {time}");
         }
 
        
