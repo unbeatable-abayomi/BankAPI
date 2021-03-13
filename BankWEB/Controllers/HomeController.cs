@@ -86,7 +86,7 @@ namespace BankWEB.Controllers
         public async Task<IActionResult> Index()
         {
 
-            //Thread workerThread = new Thread(new ThreadStart(Get));
+           // Thread workerThread = new Thread(() => GetBank());
 
 
             List<EmployeeBankDetails> bankDetails = new List<EmployeeBankDetails>();
@@ -96,13 +96,13 @@ namespace BankWEB.Controllers
 
             var details = helperDataClass.GetAllEmployeeBankDetails();
             sw = Stopwatch.StartNew();
-
+            var timeNow = DateTime.Now;
             
 
             await Task.Run(async () => {
                   // var number = random.Next(2000, 10000);
                     
-                foreach (var d in details.employee.Take(15))
+                foreach (var d in details.employee.Take(10))
                     {
                       // await Task.Delay(number);
                     HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
@@ -110,156 +110,194 @@ namespace BankWEB.Controllers
                     {
                         var results = res.Content.ReadAsStringAsync().Result;
                         bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
-
-                        foreach (var x in bankDetails)
+                       // GetBank(bankDetails,d);
+                        Thread workerThread = new Thread(() => GetBank(bankDetails,d));
+                        //Thread.Sleep(3000);
+                        //foreach (var x in bankDetails.Where(x => x.AccountNumber == d.accountNumber && x.BankName == d.bankName))
+                        //{
+                        if (bankDetails.Any(x => x.AccountNumber == d.accountNumber && x.BankName == d.bankName))
                         {
-                            if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
+                            CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
                             {
-                                CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
-                                {
-                                    AccountNumber = x.AccountNumber,
-                                    BankName = x.BankName,
-                                    AccountName = x.AccountName,
-                                    IsValidAccount = true
-                                };
+                                AccountNumber = d.accountNumber,
+                                BankName = d.bankName,
+                                AccountName = d.name,
+                                IsValidAccount = true
+                            };
 
 
-
+                            
                                 correctBankDetails.Add(correctBankDetails1);
+                           //var xxx = string.Join(", ", correctBankDetails1);
 
-                            }
+                            //Debug.WriteLine(xxx);
                         }
+                            //}
+                       // }
 
 
                     }
                 };
             });
-            await Task.Run(async () => {
-               // var number = random.Next(2000, 10000);
-               
-                foreach (var d in details.employee.Skip(18))
-                {
-                   // await Task.Delay(number);
-                    HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
-                    if (res.IsSuccessStatusCode)
-                    {
-                        var results = res.Content.ReadAsStringAsync().Result;
-                        bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
+            //await Task.Run(async () => {
+            //   // var number = random.Next(2000, 10000);
 
-                        foreach (var x in bankDetails)
-                        {
-                            if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
-                            {
-                                CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
-                                {
-                                    AccountNumber = x.AccountNumber,
-                                    BankName = x.BankName,
-                                    AccountName = x.AccountName,
-                                    IsValidAccount = true
-                                };
+            //    foreach (var d in details.employee.Skip(18))
+            //    {
+            //       // await Task.Delay(number);
+            //        HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
+            //        if (res.IsSuccessStatusCode)
+            //        {
+            //            var results = res.Content.ReadAsStringAsync().Result;
+            //            bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
 
-
-
-                                correctBankDetails.Add(correctBankDetails1);
-
-                            }
-                        }
+            //            foreach (var x in bankDetails)
+            //            {
+            //                if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
+            //                {
+            //                    CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
+            //                    {
+            //                        AccountNumber = x.AccountNumber,
+            //                        BankName = x.BankName,
+            //                        AccountName = x.AccountName,
+            //                        IsValidAccount = true
+            //                    };
 
 
-                    }
-                };
-            });
+
+            //                    correctBankDetails.Add(correctBankDetails1);
+
+            //                }
+            //            }
 
 
+            //        }
+            //    };
+            //});
+
+            var timeReal = DateTime.Now;
             var time = sw.ElapsedMilliseconds;
             ViewBag.TimeUsed = time;
-            var allValidBankDetails = correctBankDetails.ToList();
+            ViewBag.TimeUsed2 = timeNow;
+            ViewBag.TimeUsed3 = timeReal;
            
+            var allValidBankDetails = correctBankDetails.ToList();
+            var timeReal2 = allValidBankDetails.Count();
+            ViewBag.TimeUsed4 = timeReal2;
             return View(allValidBankDetails);
         }
 
-        public async void Get()
+
+        public void GetBank(List<EmployeeBankDetails> employeeBankDetails , EmployeeDetails d)
         {
-            List<EmployeeBankDetails> bankDetails = new List<EmployeeBankDetails>();
-            HttpClient client = bankAPIHelper.Initial();
-            Stopwatch sw;
-            var helperDataClass = new BankAPIHelper();
-            var details = helperDataClass.GetAllEmployeeBankDetails();
+            foreach (var x in employeeBankDetails.Where(x => x.AccountNumber == d.accountNumber && x.BankName == d.bankName))
+            {
+                //if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
+                //{
+                CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
+                {
+                    AccountNumber = x.AccountNumber,
+                    BankName = x.BankName,
+                    AccountName = x.AccountName,
+                    IsValidAccount = true
+                };
+
+
+
+                correctBankDetails.Add(correctBankDetails1);
+
+                Debug.WriteLine(correctBankDetails1);
+
+                Debug.WriteLine("kkkkkkkkkkkkkkkkkkkk");
+
+                //}
+            }
             
-           await Task.Run(async () => {
-                foreach (var d in details.employee.Skip(15))
-                {
-
-                    var number = random.Next(2000, 10000);
-                    await Task.Delay(number);
-                    HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
-                    if (res.IsSuccessStatusCode)
-                    {
-                        var results = res.Content.ReadAsStringAsync().Result;
-                        bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
-
-                        foreach (var x in bankDetails)
-                        {
-                            if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
-                            {
-                                CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
-                                {
-                                    AccountNumber = x.AccountNumber,
-                                    BankName = x.BankName,
-                                    AccountName = x.AccountName,
-                                    IsValidAccount = true
-                                };
-
-
-
-                                correctBankDetails.Add(correctBankDetails1);
-
-                            }
-                        }
-
-
-                    }
-                };
-           });
-
-            await Task.Run(async () => {
-                foreach (var d in details.employee.Skip(15))
-                {
-
-                    var number = random.Next(2000, 10000);
-                    await Task.Delay(number);
-                    HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
-                    if (res.IsSuccessStatusCode)
-                    {
-                        var results = res.Content.ReadAsStringAsync().Result;
-                        bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
-
-                        foreach (var x in bankDetails)
-                        {
-                            if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
-                            {
-                                CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
-                                {
-                                    AccountNumber = x.AccountNumber,
-                                    BankName = x.BankName,
-                                    AccountName = x.AccountName,
-                                    IsValidAccount = true
-                                };
-
-
-
-                                correctBankDetails.Add(correctBankDetails1);
-
-                            }
-                        }
-
-
-                    }
-                };
-            });
-
-
         }
+
+
+        //public async void Get()
+        //{
+        //    List<EmployeeBankDetails> bankDetails = new List<EmployeeBankDetails>();
+        //    HttpClient client = bankAPIHelper.Initial();
+        //    Stopwatch sw;
+        //    var helperDataClass = new BankAPIHelper();
+        //    var details = helperDataClass.GetAllEmployeeBankDetails();
+            
+        //   await Task.Run(async () => {
+        //        foreach (var d in details.employee.Skip(15))
+        //        {
+
+        //            var number = random.Next(2000, 10000);
+        //            await Task.Delay(number);
+        //            HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
+        //            if (res.IsSuccessStatusCode)
+        //            {
+        //                var results = res.Content.ReadAsStringAsync().Result;
+        //                bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
+
+        //                foreach (var x in bankDetails)
+        //                {
+        //                    if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
+        //                    {
+        //                        CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
+        //                        {
+        //                            AccountNumber = x.AccountNumber,
+        //                            BankName = x.BankName,
+        //                            AccountName = x.AccountName,
+        //                            IsValidAccount = true
+        //                        };
+
+
+
+        //                        correctBankDetails.Add(correctBankDetails1);
+
+        //                    }
+        //                }
+
+
+        //            }
+        //        };
+        //   });
+
+        //    await Task.Run(async () => {
+        //        foreach (var d in details.employee.Skip(15))
+        //        {
+
+        //            var number = random.Next(2000, 10000);
+        //            await Task.Delay(number);
+        //            HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
+        //            if (res.IsSuccessStatusCode)
+        //            {
+        //                var results = res.Content.ReadAsStringAsync().Result;
+        //                bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
+
+        //                foreach (var x in bankDetails)
+        //                {
+        //                    if (d.accountNumber == x.AccountNumber && d.bankName == x.BankName)
+        //                    {
+        //                        CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
+        //                        {
+        //                            AccountNumber = x.AccountNumber,
+        //                            BankName = x.BankName,
+        //                            AccountName = x.AccountName,
+        //                            IsValidAccount = true
+        //                        };
+
+
+
+        //                        correctBankDetails.Add(correctBankDetails1);
+
+        //                    }
+        //                }
+
+
+        //            }
+        //        };
+        //    });
+
+
+        //}
         public async Task<ActionResult<IEnumerable<CorrectBankDetails>>> GetFirstt()
         {
             List<EmployeeBankDetails> bankDetails = new List<EmployeeBankDetails>();
