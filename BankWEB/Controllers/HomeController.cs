@@ -100,21 +100,19 @@ namespace BankWEB.Controllers
             
 
             await Task.Run(async () => {
-                  // var number = random.Next(2000, 10000);
+           
                     
-                foreach (var d in details.employee.Take(10))
+                foreach (var d in details.employee)
                     {
-                      // await Task.Delay(number);
+                    
                     HttpResponseMessage res = await client.GetAsync($"api/banks/{d.bankName}");
                     if (res.IsSuccessStatusCode)
                     {
                         var results = res.Content.ReadAsStringAsync().Result;
                         bankDetails = JsonConvert.DeserializeObject<List<EmployeeBankDetails>>(results);
-                       // GetBank(bankDetails,d);
+
                         Thread workerThread = new Thread(() => GetBank(bankDetails,d));
-                        //Thread.Sleep(3000);
-                        //foreach (var x in bankDetails.Where(x => x.AccountNumber == d.accountNumber && x.BankName == d.bankName))
-                        //{
+                      
                         if (bankDetails.Any(x => x.AccountNumber == d.accountNumber && x.BankName == d.bankName))
                         {
                             CorrectBankDetails correctBankDetails1 = new CorrectBankDetails()
@@ -128,12 +126,9 @@ namespace BankWEB.Controllers
 
                             
                                 correctBankDetails.Add(correctBankDetails1);
-                           //var xxx = string.Join(", ", correctBankDetails1);
-
-                            //Debug.WriteLine(xxx);
+                        
                         }
-                            //}
-                       // }
+                     
 
 
                     }
